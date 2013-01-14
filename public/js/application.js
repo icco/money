@@ -1,3 +1,4 @@
+// Based off of http://bl.ocks.org/3886208
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -8,8 +9,15 @@ var x = d3.scale.ordinal()
 var y = d3.scale.linear()
     .rangeRound([height, 0]);
 
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+var color = d3.scale.ordinal().range([
+    "#98abc5",
+    "#8a89a6",
+    "#7b6888",
+    "#6b486b",
+    "#a05d56",
+    "#d0743c",
+    "#ff8c00"
+    ]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -27,17 +35,18 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("/data.csv", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "State"; }));
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
 
   data.forEach(function(d) {
     var y0 = 0;
-    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-    d.total = d.ages[d.ages.length - 1].y1;
+    d.accounts = color.domain().map(function(name) {
+      console.log(d[name]);
+      return { name: name, y0: y0, y1: y0 += +d[name] };
+    });
+    d.total = d.accounts[d.accounts.length - 1].y1;
   });
 
-  data.sort(function(a, b) { return b.total - a.total; });
-
-  x.domain(data.map(function(d) { return d.State; }));
+  x.domain(data.map(function(d) { return d.date; }));
   y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
   svg.append("g")
@@ -59,10 +68,10 @@ d3.csv("/data.csv", function(error, data) {
       .data(data)
     .enter().append("g")
       .attr("class", "g")
-      .attr("transform", function(d) { return "translate(" + x(d.State) + ",0)"; });
+      .attr("transform", function(d) { return "translate(" + x(d.date) + ",0)"; });
 
   state.selectAll("rect")
-      .data(function(d) { return d.ages; })
+      .data(function(d) { return d.accounts; })
     .enter().append("rect")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
