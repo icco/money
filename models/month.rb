@@ -31,7 +31,7 @@ class Month < ActiveRecord::Base
   end
 
   def csv_names
-    return self.accounts.keys.sort.map {|k| "\"#{k}\"" }.join(',')
+    return self.accounts.keys.sort.map {|k| "\"#{k.hash}\"" }.join(',')
   end
 
   def csv_values
