@@ -7,3 +7,8 @@ desc "Run a local server."
 task :local do
   Kernel.exec("shotgun -s thin -p 9393")
 end
+
+task :cron do
+  Mint.accounts(ENV['MINT_USERNAME'], ENV['MINT_PASSWORD']).each do |account|
+  end
+end
