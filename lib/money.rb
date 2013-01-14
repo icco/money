@@ -1,5 +1,5 @@
 class Money
-  def self.accounts
+  def self.accounts username, password
     # Setup
     # http://mechanize.rubyforge.org/Mechanize.html
     agent = Mechanize.new
