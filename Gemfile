@@ -3,6 +3,7 @@ source :rubygems
 # Project requirements
 gem 'activerecord', :require => "active_record"
 gem 'erubis', "~> 2.7.0"
+gem 'honeybadger'
 gem 'json'
 gem 'mechanize'
 gem 'minitest', :require => 'minitest/autorun', :group => 'test'

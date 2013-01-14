@@ -5,6 +5,8 @@ class Money < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
 
+  use Honeybadger::Rack
+
   enable :sessions
 
   ##
