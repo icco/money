@@ -29,4 +29,17 @@ class Month < ActiveRecord::Base
   def accounts= val
     return self.accounts_json = val.to_json
   end
+
+  def csv_names
+    return self.accounts.keys.sort.map {|k| "\"#{k}\"" }.join(',')
+  end
+
+  def csv_values
+    ret = []
+    self.accounts.keys.sort.each do |k|
+      ret.push self[k]
+    end
+
+    return ret.join ','
+  end
 end

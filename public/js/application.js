@@ -35,18 +35,17 @@ var svg = d3.select("#chart").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("/data.csv", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "month"; }));
 
   data.forEach(function(d) {
     var y0 = 0;
     d.accounts = color.domain().map(function(name) {
-      console.log(d[name]);
       return { name: name, y0: y0, y1: y0 += +d[name] };
     });
     d.total = d.accounts[d.accounts.length - 1].y1;
   });
 
-  x.domain(data.map(function(d) { return d.date; }));
+  x.domain(data.map(function(d) { return d.month; }));
   y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
   svg.append("g")
@@ -62,13 +61,13 @@ d3.csv("/data.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Population");
+      .text("USD");
 
   var state = svg.selectAll(".state")
       .data(data)
     .enter().append("g")
       .attr("class", "g")
-      .attr("transform", function(d) { return "translate(" + x(d.date) + ",0)"; });
+      .attr("transform", function(d) { return "translate(" + x(d.month) + ",0)"; });
 
   state.selectAll("rect")
       .data(function(d) { return d.accounts; })

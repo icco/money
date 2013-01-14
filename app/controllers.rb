@@ -7,14 +7,14 @@ Money.controllers  do
     render :index
   end
 
-  get :'data.csv', :cache => true do
+  get :'data.csv', :cache => Padrino.env != :development do
     expires_in ONE_HOUR
 
-    @accounts = Account.all
     @months = Month.all
 
-
-    etag "data/accounts-#{Account.maximum(:created_at)}"
+    if Padrino.env != :development
+      etag "data/accounts-#{Month.maximum(:updated_at)}"
+    end
     content_type "text/csv"
     render :data, :layout => false
   end
