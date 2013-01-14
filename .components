@@ -1,7 +1,7 @@
 ---
 :orm: activerecord
-:test: none
-:mock: none
+:test: minitest
+:mock: rr
 :script: jquery
 :renderer: erb
 :stylesheet: sass

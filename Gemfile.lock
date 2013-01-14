@@ -37,6 +37,7 @@ GEM
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (~> 0.0, >= 0.0.9)
     mime-types (1.19)
+    minitest (4.4.0)
     multi_json (1.5.0)
     net-http-digest_auth (1.2.1)
     net-http-persistent (2.8)
@@ -74,7 +75,10 @@ GEM
     rack (1.4.4)
     rack-protection (1.3.2)
       rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
     rake (10.0.3)
+    rr (1.0.4)
     sass (3.2.5)
     shotgun (0.9)
       rack (>= 1.0)
@@ -109,9 +113,12 @@ DEPENDENCIES
   erubis (~> 2.7.0)
   json
   mechanize
+  minitest
   padrino (= 0.10.6)
   pg
+  rack-test
   rake
+  rr
   sass
   shotgun
   sinatra-flash
