@@ -3,6 +3,8 @@ source :rubygems
 # Project requirements
 gem 'activerecord', :require => "active_record"
 gem 'erubis', "~> 2.7.0"
+gem 'json'
+gem 'mechanize'
 gem 'pg'
 gem 'rake'
 gem 'sass'
