@@ -9,6 +9,9 @@ task :local do
 end
 
 task :cron do
-  Mint.accounts(ENV['MINT_USERNAME'], ENV['MINT_PASSWORD']).each do |account|
+  mint = Mint.new(ENV['MINT_USERNAME'], ENV['MINT_PASSWORD'])
+
+  mint.accounts.each do |account|
+    p account
   end
 end
