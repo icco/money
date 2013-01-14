@@ -1,3 +1,3 @@
-# EDIT ME.
+# money
 
-I AM A GENERATED README.
+A webapp to track my monies.
