@@ -11,6 +11,8 @@ Money.controllers  do
     expires_in ONE_HOUR
 
     @accounts = Account.all
+    @months = Month.all
+
 
     etag "data/accounts-#{Account.maximum(:created_at)}"
     content_type "text/csv"

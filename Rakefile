@@ -8,6 +8,7 @@ task :local do
   Kernel.exec("shotgun -s thin -p 9393")
 end
 
+desc "Gets data from mint."
 task :cron do
   mint = Mint.new(ENV['MINT_USERNAME'], ENV['MINT_PASSWORD'])
 
@@ -17,5 +18,14 @@ task :cron do
     a.amount = account[:amount]
     a.name = account[:name]
     a.save
+  end
+end
+
+desc "Shrinks account data into months."
+task :reduce do
+  Account.all.each do |entry|
+    m = Month.get entry.created_at.year, entry.created_at.month
+    m.set entry.name, entry.amount
+    m.save
   end
 end
