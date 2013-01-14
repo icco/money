@@ -1,5 +1,7 @@
 Money.controllers  do
+  layout :main
+
   get :index do
-    "WHAT?!"
+    render :index
   end
 end
