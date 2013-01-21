@@ -6,7 +6,7 @@ Money.controllers  do
   layout :main
 
   get :index do
-    if session[:show] == true || PADRINO_ENV == "development"
+    if session[:show] || PADRINO_ENV == "development"
       render :index
     else
       redirect :login
@@ -18,7 +18,21 @@ Money.controllers  do
   end
 
   get '/auth/github/callback' do
-    p params
+    auth = request.env["omniauth.auth"]
+    logger.push(" Github: #{auth.inspect}", :devel)
+
+    session[:show] = auth["info"]["nickname"] == ENV['GITHUB_OWNER']
+
+    if session[:show]
+      redirect :index
+    else
+      redirect :fail, :layout => false
+    end
+  end
+
+  get :fail do
+    session.clear
+    render :fail
   end
 
   get :'week_data.csv', :cache => Padrino.env != :development do
