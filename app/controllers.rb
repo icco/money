@@ -6,7 +6,7 @@ Money.controllers  do
   layout :main
 
   get :index do
-    if session[:show] || PADRINO_ENV == "development"
+    if session[:show] || Padrino.env != :development
       render :index
     else
       redirect :login
