@@ -24,7 +24,7 @@ Money.controllers  do
     session[:show] = auth["info"]["nickname"] == ENV['GITHUB_OWNER']
 
     if session[:show]
-      redirect :index
+      redirect '/'
     else
       redirect :fail, :layout => false
     end
