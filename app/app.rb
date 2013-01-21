@@ -9,6 +9,9 @@ class Money < Padrino::Application
 
   enable :sessions
 
+  # TODO(icco): Fix.
+  HIDE = true
+
   ##
   # Caching support
   #

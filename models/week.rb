@@ -1,8 +1,12 @@
-class Month < ActiveRecord::Base
-  def self.get year, month
-    m = Month.where(:year => year, :month => month).first
-    m = Month.new(:year => year, :month => month) if m.nil?
-    return m
+class Week < ActiveRecord::Base
+  def self.get year, week
+    w = Week.where(:year => year, :week => week).first
+    w = Week.new(:year => year, :week => week) if w.nil?
+    return w
+  end
+
+  def date
+    return "#{self.year}-W#{"%02d" % self.week}-1"
   end
 
   # TODO(natwelch): AVG values?
@@ -48,4 +52,5 @@ class Month < ActiveRecord::Base
 
     return ret.join ','
   end
+
 end

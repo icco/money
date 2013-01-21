@@ -24,6 +24,10 @@ end
 desc "Shrinks account data into months."
 task :reduce do
   Account.all.each do |entry|
+    w = Week.get entry.created_at.strftime('%G').to_i, entry.created_at.strftime('%V').to_i
+    w.set entry.name, entry.amount
+    w.save
+
     m = Month.get entry.created_at.year, entry.created_at.month
     m.set entry.name, entry.amount
     m.save

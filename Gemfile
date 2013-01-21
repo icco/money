@@ -2,6 +2,7 @@ source :rubygems
 
 # Project requirements
 gem 'activerecord', :require => "active_record"
+gem 'chronic'
 gem 'erubis', "~> 2.7.0"
 gem 'honeybadger'
 gem 'json'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(:version => 2) do
   create_table "months", :force => true do |t|
     t.integer  "year"
     t.integer  "month"
+    t.string   "accounts_json"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "weeks", :force => true do |t|
+    t.integer  "year"
+    t.integer  "week"
     t.string   "accounts_json"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
