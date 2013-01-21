@@ -22,6 +22,6 @@ class Money < Padrino::Application
 
   OmniAuth.config.logger = logger
   use OmniAuth::Builder do
-    provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], scope: "user,repo"
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: "user"
   end
 end
