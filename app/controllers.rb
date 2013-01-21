@@ -5,8 +5,20 @@ Money.controllers  do
 
   layout :main
 
-  get :index, :cache => true do
-    render :index
+  get :index do
+    if session[:show] == true || PADRINO_ENV == "development"
+      render :index
+    else
+      redirect :login
+    end
+  end
+
+  get :login do
+    render :login
+  end
+
+  get '/auth/github/callback' do
+    p params
   end
 
   get :'week_data.csv', :cache => Padrino.env != :development do
