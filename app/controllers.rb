@@ -26,13 +26,13 @@ Money.controllers  do
     if session[:show]
       redirect '/'
     else
-      redirect :fail, :layout => false
+      redirect :fail
     end
   end
 
   get :fail do
     session.clear
-    render :fail
+    render :fail, :layout => false
   end
 
   get :'week_data.csv', :cache => Padrino.env != :development do
@@ -45,8 +45,12 @@ Money.controllers  do
       etag "data/accounts-#{Week.maximum(:updated_at)}"
     end
 
-    content_type "text/csv"
-    render :week_data, :layout => false
+    if session[:show] || Padrino.env != :development
+      content_type "text/csv"
+      render :week_data, :layout => false
+    else
+      redirect :login
+    end
   end
 
   get :'month_data.csv', :cache => Padrino.env != :development do
@@ -59,7 +63,11 @@ Money.controllers  do
       etag "data/accounts-#{Month.maximum(:updated_at)}"
     end
 
-    content_type "text/csv"
-    render :month_data, :layout => false
+    if session[:show] || Padrino.env != :development
+      content_type "text/csv"
+      render :month_data, :layout => false
+    else
+      redirect :login
+    end
   end
 end
