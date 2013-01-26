@@ -3,9 +3,27 @@ body {
   margin: 20px;
 }
 
-#y_axis {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40px;
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 8px 0 0;
+}
+
+.lbl {
+  display: inline-block;
+}
+
+.line {
+  display: inline-block;
+  margin: 0 0 0 30px;
+}
+
+#legend {
+  text-align: center;
+}
+
+.rickshaw_graph .detail {
+  background: none;
 }

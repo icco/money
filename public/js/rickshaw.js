@@ -451,6 +451,10 @@ Rickshaw.Graph = function(args) {
 				throw "series data is not an array: " + JSON.stringify(s.data);
 			}
 
+      if (!(s.data[0])) {
+				throw "series data[0] is undefined: " + JSON.stringify(s);
+      }
+
 			var x = s.data[0].x;
 			var y = s.data[0].y;
 

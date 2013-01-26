@@ -2,7 +2,12 @@ function account_chart() {
   var colors = d3.scale.category20();
   var data;
   d3.json('/accounts.json', function(json) {
-    data = json;
+    data = json.map(function(s) {
+      console.log(s);
+      s.color = colors(name);
+
+      return s;
+    });
 
     var graph = new Rickshaw.Graph({
       element: document.querySelector("#account_chart"),
@@ -19,13 +24,12 @@ function account_chart() {
     var legend = document.querySelector('#legend');
 
     var Hover = Rickshaw.Class.create(Rickshaw.Graph.HoverDetail, {
-
       render: function(args) {
-
         legend.innerHTML = args.formattedXValue;
 
-        args.detail.sort(function(a, b) { return a.order - b.order }).forEach( function(d) {
-
+        args.detail.sort(function(a, b) {
+          return a.order - b.order;
+        }).forEach(function(d) {
           var line = document.createElement('div');
           line.className = 'line';
 
@@ -34,7 +38,7 @@ function account_chart() {
           swatch.style.backgroundColor = d.series.color;
 
           var label = document.createElement('div');
-          label.className = 'label';
+          label.className = 'lbl';
           label.innerHTML = d.name + ": " + d.formattedYValue;
 
           line.appendChild(swatch);
@@ -52,13 +56,11 @@ function account_chart() {
           dot.className = 'dot active';
 
           this.show();
+        }, this);
+      }
+    });
 
-        }, this );
-            }
-});
-
-var hover = new Hover( { graph: graph } ); 
-
+    var hover = new Hover({ graph: graph });
   });
 }
 

@@ -50,12 +50,10 @@ Money.controllers  do
     dates = Set.new
     Account.order("created_at").all.each do |account|
       hash[account.name] ||= []
-      if account.amount > 0
-        hash[account.name].push({
-          :x => account.created_at.to_date.strftime('%s').to_i,
-          :y => account.amount,
-        })
-      end
+      hash[account.name].push({
+        :x => account.created_at.to_date.strftime('%s').to_i,
+        :y => account.amount,
+      })
     end
 
     # put zeros for days we don't have data
