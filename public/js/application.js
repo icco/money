@@ -1,40 +1,8 @@
 function account_chart() {
   var colors = d3.scale.category20();
-  keyColor = function(d, i) {return colors(d.key)};
-
   var data;
   d3.json('/accounts.json', function(json) {
     data = json;
-
-    nv.addGraph(function() {
-
-      var chart = nv.models.cumulativeLineChart()
-        .x(function(d) { return d.date; })
-        .y(function(d) { console.log(d.amount); return d.amount; })
-        .showControls(false)
-        .color(keyColor);
-
-
-      chart.xAxis
-        //.showMaxMin(false)
-        .tickFormat(function(d) {
-          date = new Date(d);
-          return d3.time.format('%x')(date);
-        });
-
-      chart.yAxis.tickFormat(d3.format(',.2f'));
-
-      console.log(data);
-      d3.select('#account_chart svg')
-        .datum(data)
-        .transition()
-        .duration(500)
-        .call(chart);
-
-      nv.utils.windowResize(chart.update);
-
-      return chart;
-    });
   });
 }
 
