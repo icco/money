@@ -1,3 +1,40 @@
+function account_chart() {
+  var data;
+  d3.json('/accounts.json', function(error, json) {
+    if (error) return console.warn(error);
+    data = json;
+
+    nv.addGraph(function() {
+
+      var chart = nv.models.stackedAreaChart()
+        .x(function(d) { return d.date })
+        .y(function(d) { return d.ammount })
+        .clipEdge(true);
+
+      chart.xAxis
+        .showMaxMin(false)
+        .tickFormat(function(d) {
+          date = new Date(d);
+          console.log(d, date);
+          return d3.time.format('%x')(date);
+        });
+
+      chart.yAxis.tickFormat(d3.format(',.2f'));
+
+      console.log(data);
+      d3.select('#account_chart svg')
+        .datum(data)
+        .transition()
+        .duration(500)
+        .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+  });
+}
+
 function month_chart() {
   // Based off of http://bl.ocks.org/3886208
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -201,6 +238,7 @@ function week_chart() {
 }
 
 $(document).ready(function() {
-  week_chart();
-  month_chart();
+  //week_chart();
+  //month_chart();
+  account_chart();
 });

@@ -48,14 +48,19 @@ Money.controllers  do
     Account.all.each do |account|
       hash[account.name] ||= []
       hash[account.name].push({
-        :date => account.created_at,
+        :date => account.created_at.to_i,
         :amount => account.amount,
       })
     end
 
+    output = []
+    hash.each_pair do |k,v|
+      output.push({ :key => k, :values => v })
+    end
+
     if session[:show] || Padrino.env == :development
       content_type "application/json"
-      return hash.to_json
+      return output.to_json
     else
       redirect :login
     end
