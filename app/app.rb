@@ -5,8 +5,6 @@ class Money < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
 
-  helpers Sinatra::JSON
-
   if PADRINO_ENV != "development"
     use Honeybadger::Rack
   end
