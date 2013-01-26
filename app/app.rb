@@ -24,4 +24,12 @@ class Money < Padrino::Application
   use OmniAuth::Builder do
     provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: "user"
   end
+
+  def self.isDev?
+    return Padrino.env == :development
+  end
+
+  def self.isProd?
+    return Padrino.env != :development
+  end
 end

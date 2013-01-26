@@ -6,8 +6,7 @@ Money.controllers  do
   layout :main
 
   get :index do
-    p Padrino.env
-    if session[:show] || Padrino.env == :development
+    if isLoggedIn?
       render :index
     else
       redirect :login
@@ -24,7 +23,7 @@ Money.controllers  do
 
     session[:show] = auth["info"]["nickname"] == ENV['GITHUB_OWNER']
 
-    if session[:show]
+    if isLoggedIn?
       redirect '/'
     else
       redirect :fail
@@ -36,13 +35,13 @@ Money.controllers  do
     render :fail, :layout => false
   end
 
-  get :'accounts.json', :cache => Padrino.env != :development do
+  get :'accounts.json', :cache => isProd? do
     expires_in ONE_HOUR
 
     require 'set'
 
     # Nice little caching.
-    if Padrino.env != :development
+    if isProd?
       etag "data/accounts-#{Account.maximum(:updated_at)}"
     end
 
@@ -73,7 +72,7 @@ Money.controllers  do
       output.push({ :key => k, :values => v })
     end
 
-    if session[:show] || Padrino.env == :development
+    if isLoggedIn?
       content_type "application/json"
       return output.to_json
     else
@@ -81,17 +80,17 @@ Money.controllers  do
     end
   end
 
-  get :'week_data.csv', :cache => Padrino.env != :development do
+  get :'week_data.csv', :cache => isProd? do
     expires_in ONE_HOUR
 
     @weeks = Week.all
 
     # Nice little caching.
-    if Padrino.env != :development
+    if isProd?
       etag "data/weeks-#{Week.maximum(:updated_at)}"
     end
 
-    if session[:show] || Padrino.env == :development
+    if isLoggedIn?
       content_type "text/csv"
       render :week_data, :layout => false
     else
@@ -99,17 +98,17 @@ Money.controllers  do
     end
   end
 
-  get :'month_data.csv', :cache => Padrino.env != :development do
+  get :'month_data.csv', :cache => isProd? do
     expires_in ONE_HOUR
 
     @months = Month.all
 
     # Nice little caching.
-    if Padrino.env != :development
+    if isProd?
       etag "data/months-#{Month.maximum(:updated_at)}"
     end
 
-    if session[:show] || Padrino.env == :development
+    if isLoggedIn?
       content_type "text/csv"
       render :month_data, :layout => false
     else
