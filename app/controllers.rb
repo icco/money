@@ -61,14 +61,14 @@ Money.controllers  do
 
     output = []
     hash.each_pair do |k,v|
-      #dates.each do |d|
-      #  v.each do |val|
-      #    if val[:date] == d
-      #      break
-      #    end
-      #  end
-      #  v.push({:date => d, :amount => 0})
-      #end
+      dates.each do |d|
+        v.each do |val|
+          if val[:date] == d
+            break
+          end
+        end
+        v.push({:date => d, :amount => 0})
+      end
 
       output.push({ :key => k, :values => v })
     end
