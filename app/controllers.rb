@@ -52,11 +52,10 @@ Money.controllers  do
         :amount => account.amount,
       })
     end
-    p hash
-    p hash.to_json
 
     if session[:show] || Padrino.env == :development
-      json hash
+      content_type "application/json"
+      return hash.to_json
     else
       redirect :login
     end
