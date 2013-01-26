@@ -8,14 +8,15 @@ function account_chart() {
 
     nv.addGraph(function() {
 
-      var chart = nv.models.stackedAreaChart()
-        .x(function(d) { console.log(d); return d.date; })
-        .y(function(d) { console.log(d); return d.amount; })
+      var chart = nv.models.cumulativeLineChart()
+        .x(function(d) { return d.date; })
+        .y(function(d) { console.log(d.amount); return d.amount; })
+        .showControls(false)
         .color(keyColor);
 
 
       chart.xAxis
-        .showMaxMin(false)
+        //.showMaxMin(false)
         .tickFormat(function(d) {
           date = new Date(d);
           return d3.time.format('%x')(date);

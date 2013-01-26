@@ -45,36 +45,28 @@ Money.controllers  do
       etag "data/accounts-#{Account.maximum(:updated_at)}"
     end
 
+    # create a hash grouped by account name
     hash = {}
     dates = Set.new
-    Account.all.each do |account|
+    Account.order("created_at").all.each do |account|
       hash[account.name] ||= []
       if account.amount > 0
-      hash[account.name].push({
-        :date => account.created_at.to_date.strftime('%s'),
-        :amount => account.amount,
-      })
-      dates.add account.created_at.to_date.strftime('%s')
+        hash[account.name].push({
+          :date => account.created_at.to_date.strftime('%Q'),
+          :amount => account.amount,
+        })
       end
     end
 
+    # put zeros for days we don't have data
     output = []
     hash.each_pair do |k,v|
-      dates.each do |d|
-        v.each do |val|
-          if val[:date] == d
-            break
-          end
-        end
-        v.push({:date => d, :amount => 0})
-      end
-
       output.push({ :key => k, :values => v })
     end
 
     if isLoggedIn?
       content_type "application/json"
-      return output.to_json
+      return [output[0]].to_json
     else
       redirect :login
     end
