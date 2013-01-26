@@ -6,7 +6,8 @@ Money.controllers  do
   layout :main
 
   get :index do
-    if session[:show] || Padrino.env != :development
+    p Padrino.env
+    if session[:show] || Padrino.env == :development
       render :index
     else
       redirect :login
@@ -35,6 +36,32 @@ Money.controllers  do
     render :fail, :layout => false
   end
 
+  get :'accounts.json', :cache => Padrino.env != :development do
+    expires_in ONE_HOUR
+
+    # Nice little caching.
+    if Padrino.env != :development
+      etag "data/accounts-#{Account.maximum(:updated_at)}"
+    end
+
+    hash = {}
+    Account.all.each do |account|
+      hash[account.name] ||= []
+      hash[account.name].push({
+        :date => account.created_at,
+        :amount => account.amount,
+      })
+    end
+    p hash
+    p hash.to_json
+
+    if session[:show] || Padrino.env == :development
+      json hash
+    else
+      redirect :login
+    end
+  end
+
   get :'week_data.csv', :cache => Padrino.env != :development do
     expires_in ONE_HOUR
 
@@ -42,10 +69,10 @@ Money.controllers  do
 
     # Nice little caching.
     if Padrino.env != :development
-      etag "data/accounts-#{Week.maximum(:updated_at)}"
+      etag "data/weeks-#{Week.maximum(:updated_at)}"
     end
 
-    if session[:show] || Padrino.env != :development
+    if session[:show] || Padrino.env == :development
       content_type "text/csv"
       render :week_data, :layout => false
     else
@@ -60,10 +87,10 @@ Money.controllers  do
 
     # Nice little caching.
     if Padrino.env != :development
-      etag "data/accounts-#{Month.maximum(:updated_at)}"
+      etag "data/months-#{Month.maximum(:updated_at)}"
     end
 
-    if session[:show] || Padrino.env != :development
+    if session[:show] || Padrino.env == :development
       content_type "text/csv"
       render :month_data, :layout => false
     else

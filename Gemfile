@@ -14,6 +14,7 @@ gem 'rack-test', :require => 'rack/test', :group => 'test'
 gem 'rake'
 gem 'rr', :group => 'test'
 gem 'sass'
+gem 'sinatra-contrib', :require => 'sinatra/json'
 gem 'sinatra-flash', :require => 'sinatra/flash'
 gem 'thin'
 
