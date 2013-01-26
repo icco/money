@@ -1,15 +1,11 @@
 body {
   font: 10px sans-serif;
-  margin: 20px; }
+  margin: 20px;
+}
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges; }
-
-.bar {
-  fill: steelblue; }
-
-.x.axis path {
-  display: none; }
+#y_axis {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+}

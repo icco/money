@@ -52,8 +52,8 @@ Money.controllers  do
       hash[account.name] ||= []
       if account.amount > 0
         hash[account.name].push({
-          :date => account.created_at.to_date.strftime('%Q'),
-          :amount => account.amount,
+          :x => account.created_at.to_date.strftime('%s').to_i,
+          :y => account.amount,
         })
       end
     end
@@ -61,12 +61,12 @@ Money.controllers  do
     # put zeros for days we don't have data
     output = []
     hash.each_pair do |k,v|
-      output.push({ :key => k, :values => v })
+      output.push({ :name => k, :data => v })
     end
 
     if isLoggedIn?
       content_type "application/json"
-      return [output[0]].to_json
+      return output.to_json
     else
       redirect :login
     end
