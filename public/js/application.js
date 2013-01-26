@@ -1,21 +1,23 @@
 function account_chart() {
+  var colors = d3.scale.category20();
+  keyColor = function(d, i) {return colors(d.key)};
+
   var data;
-  d3.json('/accounts.json', function(error, json) {
-    if (error) return console.warn(error);
+  d3.json('/accounts.json', function(json) {
     data = json;
 
     nv.addGraph(function() {
 
       var chart = nv.models.stackedAreaChart()
-        .x(function(d) { return d.date })
-        .y(function(d) { return d.ammount })
-        .clipEdge(true);
+        .x(function(d) { console.log(d); return d.date; })
+        .y(function(d) { console.log(d); return d.amount; })
+        .color(keyColor);
+
 
       chart.xAxis
         .showMaxMin(false)
         .tickFormat(function(d) {
           date = new Date(d);
-          console.log(d, date);
           return d3.time.format('%x')(date);
         });
 

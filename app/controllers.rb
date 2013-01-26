@@ -39,22 +39,37 @@ Money.controllers  do
   get :'accounts.json', :cache => Padrino.env != :development do
     expires_in ONE_HOUR
 
+    require 'set'
+
     # Nice little caching.
     if Padrino.env != :development
       etag "data/accounts-#{Account.maximum(:updated_at)}"
     end
 
     hash = {}
+    dates = Set.new
     Account.all.each do |account|
       hash[account.name] ||= []
+      if account.amount > 0
       hash[account.name].push({
-        :date => account.created_at.to_i,
+        :date => account.created_at.to_date.strftime('%s'),
         :amount => account.amount,
       })
+      dates.add account.created_at.to_date.strftime('%s')
+      end
     end
 
     output = []
     hash.each_pair do |k,v|
+      #dates.each do |d|
+      #  v.each do |val|
+      #    if val[:date] == d
+      #      break
+      #    end
+      #  end
+      #  v.push({:date => d, :amount => 0})
+      #end
+
       output.push({ :key => k, :values => v })
     end
 
