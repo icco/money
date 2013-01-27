@@ -15,6 +15,8 @@ function account_chart() {
       renderer: 'line',
       series: data,
       min: 'auto',
+      interpolation: true,
+
     });
 
     var y_ticks = new Rickshaw.Graph.Axis.Y({
