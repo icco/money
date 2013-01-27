@@ -47,12 +47,15 @@ Money.controllers  do
 
     # create a hash grouped by account name
     hash = {}
+    dates = Set.new
     Account.order("created_at").all.each do |account|
       hash[account.name] ||= []
+      date = account.created_at.to_date.strftime('%s').to_i
       hash[account.name].push({
-        :x => account.created_at.to_date.strftime('%s').to_i,
+        :x => date,
         :y => account.amount,
       })
+      dates.add(date)
     end
 
     # put zeros for days we don't have data
@@ -61,7 +64,19 @@ Money.controllers  do
       # don't list accounts who have never been anything but 0
       sum = v.reduce(0) {|sum,x| sum + x[:y] }
       if (sum.to_i != 0)
-        output.push({ :name => k, :data => v })
+
+        # Add 0 for missing dates
+        dates.each do |d|
+          v.each do |val|
+            if val[:date] == d
+              break
+            end
+          end
+
+          v.push({:x => d, :y => 0})
+        end
+        v.sort! {|a, b| a[:x] <=> b[:x] }
+        output.push({ :name => k, :data => v})
       end
     end
 
