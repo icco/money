@@ -14,6 +14,7 @@ function account_chart() {
       height: 500,
       renderer: 'line',
       series: data,
+      min: 'auto',
     });
 
     var y_ticks = new Rickshaw.Graph.Axis.Y({
