@@ -3,8 +3,7 @@ function account_chart() {
   var data;
   d3.json('/accounts.json', function(json) {
     data = json.map(function(s) {
-      console.log(s);
-      s.color = colors(name);
+      s.color = colors(s.name);
 
       return s;
     });
@@ -17,50 +16,31 @@ function account_chart() {
       series: data,
     });
 
-    var x_axis = new Rickshaw.Graph.Axis.Time({ graph: graph });
+    var y_ticks = new Rickshaw.Graph.Axis.Y({
+        graph: graph,
+          orientation: 'left',
+          tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+          element: document.getElementById('y_axis'),
+    });
 
     graph.render();
 
-    var legend = document.querySelector('#legend');
-
-    var Hover = Rickshaw.Class.create(Rickshaw.Graph.HoverDetail, {
-      render: function(args) {
-        legend.innerHTML = args.formattedXValue;
-
-        args.detail.sort(function(a, b) {
-          return a.order - b.order;
-        }).forEach(function(d) {
-          var line = document.createElement('div');
-          line.className = 'line';
-
-          var swatch = document.createElement('div');
-          swatch.className = 'swatch';
-          swatch.style.backgroundColor = d.series.color;
-
-          var label = document.createElement('div');
-          label.className = 'lbl';
-          label.innerHTML = d.name + ": " + d.formattedYValue;
-
-          line.appendChild(swatch);
-          line.appendChild(label);
-
-          legend.appendChild(line);
-
-          var dot = document.createElement('div');
-          dot.className = 'dot';
-          dot.style.top = graph.y(d.value.y0 + d.value.y) + 'px';
-          dot.style.borderColor = d.series.color;
-
-          this.element.appendChild(dot);
-
-          dot.className = 'dot active';
-
-          this.show();
-        }, this);
-      }
+    var hoverDetail = new Rickshaw.Graph.HoverDetail({
+        graph: graph
     });
 
-    var hover = new Hover({ graph: graph });
+    var legend = new Rickshaw.Graph.Legend( {
+      graph: graph,
+      element: document.getElementById('legend')
+    });
+
+    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+        graph: graph,
+        legend: legend
+    });
+
+    var axes = new Rickshaw.Graph.Axis.Time({ graph: graph });
+    axes.render();
   });
 }
 

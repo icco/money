@@ -47,7 +47,6 @@ Money.controllers  do
 
     # create a hash grouped by account name
     hash = {}
-    dates = Set.new
     Account.order("created_at").all.each do |account|
       hash[account.name] ||= []
       hash[account.name].push({
@@ -59,7 +58,11 @@ Money.controllers  do
     # put zeros for days we don't have data
     output = []
     hash.each_pair do |k,v|
-      output.push({ :name => k, :data => v })
+      # don't list accounts who have never been anything but 0
+      sum = v.reduce(0) {|sum,x| sum + x[:y] }
+      if (sum.to_i != 0)
+        output.push({ :name => k, :data => v })
+      end
     end
 
     if isLoggedIn?
