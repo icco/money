@@ -66,15 +66,21 @@ Money.controllers  do
       if (sum.to_i != 0)
 
         # Add 0 for missing dates
+        have = Set.new
         dates.each do |d|
           v.each do |val|
-            if val[:date] == d
-              break
+            if val[:x] == d
+              have.add d
             end
           end
+        end
 
+        p dates, have
+        (dates - have).each do |d|
           v.push({:x => d, :y => 0})
         end
+
+        # Make sure everything is sorted by date
         v.sort! {|a, b| a[:x] <=> b[:x] }
         output.push({ :name => k, :data => v})
       end
