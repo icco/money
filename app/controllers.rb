@@ -75,7 +75,6 @@ Money.controllers  do
           end
         end
 
-        p dates, have
         (dates - have).each do |d|
           v.push({:x => d, :y => 0})
         end
