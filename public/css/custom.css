@@ -4,7 +4,12 @@ body {
 }
 
 #legend {
-  float: right;
+  width: 900px;
+  margin: auto 0;
+}
+
+#legend li {
+  display: inline-block;
 }
 
 #y_axis {
@@ -16,7 +21,6 @@ body {
 
 #chart_container {
   position: relative;
-  float: left;
 }
 
 .chart {
