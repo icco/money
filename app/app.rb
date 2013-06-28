@@ -5,10 +5,6 @@ class Money < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
 
-  if PADRINO_ENV != "development"
-    use Honeybadger::Rack
-  end
-
   HIDE = false
 
   ##

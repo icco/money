@@ -28,8 +28,6 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     hashie (2.0.5)
-    honeybadger (1.7.0)
-      json
     http-cookie (1.0.1)
       domain_name (~> 0.5)
     http_router (0.11.0)
@@ -150,7 +148,6 @@ DEPENDENCIES
   activerecord
   chronic
   erubis (~> 2.7.0)
-  honeybadger
   json
   mechanize
   minitest
