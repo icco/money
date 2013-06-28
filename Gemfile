@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 # Project requirements
 gem 'activerecord', :require => "active_record"
@@ -18,7 +18,7 @@ gem 'sinatra-flash', :require => 'sinatra/flash'
 gem 'thin'
 
 # Padrino Stable Gem
-gem 'padrino', '0.10.6'
+gem 'padrino', '>= 0.10.6'
 
 # For dev
 group :development do
