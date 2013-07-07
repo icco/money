@@ -9,7 +9,7 @@ task :local do
 end
 
 desc "Gets data from mint."
-task :cron do
+task :cron => :environment do
   mint = Mint.new(ENV['MINT_USERNAME'], ENV['MINT_PASSWORD'])
 
   # {:name=>"COMPENSATION PLAN", :amount=>0.0}
@@ -22,7 +22,7 @@ task :cron do
 end
 
 desc "Shrinks account data into months."
-task :reduce do
+task :reduce => :environment do
   Account.all.each do |entry|
     w = Week.get entry.created_at.strftime('%G').to_i, entry.created_at.strftime('%V').to_i
     w.set entry.name, entry.amount
