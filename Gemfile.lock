@@ -142,6 +142,7 @@ DEPENDENCIES
   chronic
   erubis (~> 2.7.0)
   json
+  mail
   mechanize
   minitest
   omniauth-github

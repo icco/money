@@ -5,6 +5,7 @@ gem 'activerecord', '~> 3.0', :require => "active_record"
 gem 'chronic'
 gem 'erubis', "~> 2.7.0"
 gem 'json'
+gem 'mail'
 gem 'mechanize'
 gem 'minitest', :require => 'minitest/autorun', :group => 'test'
 gem 'omniauth-github'
