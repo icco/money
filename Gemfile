@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Project requirements
 gem 'activerecord', '~> 3.0', :require => "active_record"
 gem 'chronic'
+gem 'coinbase'
 gem 'erubis', "~> 2.7.0"
 gem 'json'
 gem 'mail'
