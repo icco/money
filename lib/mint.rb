@@ -21,8 +21,8 @@ class Mint
     page  = @agent.get(URI.join MINT_HOSTNAME, "/login.event")
     form = page.form_with(:id => "form-login")
 
-    form.username = username
-    form.password = password
+    form.form-login-username = username
+    form.form-login-password = password
     form.submit
   end
 
