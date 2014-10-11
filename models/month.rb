@@ -32,7 +32,7 @@ class Month < ActiveRecord::Base
 
   def csv_names
     return self.accounts.keys.sort.map {|k|
-      if Money::HIDE
+      if MoneyApp::HIDE
         "\"#{k.hash}\""
       else
         "\"#{k}\""

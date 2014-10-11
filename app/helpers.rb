@@ -1,12 +1,11 @@
 # Helper methods defined here can be accessed in any controller or view in the application
-
-Money.helpers do
+MoneyApp.helpers do
   def isDev?
-    return Money.isDev?
+    return MoneyApp.isDev?
   end
 
   def isProd?
-    return Money.isProd?
+    return MoneyApp.isProd?
   end
 
   def isLoggedIn?

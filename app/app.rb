@@ -1,4 +1,4 @@
-class Money < Padrino::Application
+class MoneyApp < Padrino::Application
   register SassInitializer
   use ActiveRecord::ConnectionAdapters::ConnectionManagement
   register Padrino::Rendering

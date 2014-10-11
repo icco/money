@@ -1,6 +1,6 @@
 require 'date'
 
-Money.controllers  do
+MoneyApp.controllers  do
   ONE_HOUR = 60*60
 
   layout :main

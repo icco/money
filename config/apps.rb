@@ -7,4 +7,4 @@ Padrino.configure_apps do
 end
 
 # Mounts the core application for this project
-Padrino.mount("Money").to('/')
+Padrino.mount("MoneyApp").to('/')
