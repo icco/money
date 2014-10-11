@@ -3,14 +3,6 @@ class Mint
 
   def initialize username, password
 
-    if !username
-      raise "Username not set!"
-    end
-
-    if !password
-      raise "Password not set!"
-    end
-
     # Setup
     # http://mechanize.rubyforge.org/Mechanize.html
     @agent = Mechanize.new
@@ -20,6 +12,16 @@ class Mint
     # Login
     page  = @agent.get(URI.join MINT_HOSTNAME, "/login.event")
     form = page.form_with(:id => "form-login")
+    p page
+    p form
+
+    if !username
+      raise "Username not set!"
+    end
+
+    if !password
+      raise "Password not set!"
+    end
 
     form.form-login-username = username
     form.form-login-password = password
