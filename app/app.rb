@@ -12,7 +12,6 @@ class MoneyApp < Padrino::Application
   #
   register Padrino::Cache
   enable :caching
-  set :cache, Padrino::Cache::Store::Memory.new(100)
 
   enable :sessions
 
