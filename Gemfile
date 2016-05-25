@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
+ruby '2.3.0'
 
 # Project requirements
 gem 'activerecord', '~> 3.0', :require => "active_record"
@@ -21,7 +21,7 @@ gem 'sinatra-flash', :require => 'sinatra/flash'
 gem 'thin'
 
 # Padrino Stable Gem
-gem 'padrino', '>= 0.10.6'
+gem 'padrino', '~> 0.10.6'
 
 # For dev
 group :development do
