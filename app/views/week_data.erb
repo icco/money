@@ -1,4 +1,0 @@
-date,<%= @weeks[0].csv_names %>
-<% @weeks.each {|a| %>
-  <%= Date.parse(a.date).iso8601 %>,<%= a.csv_values %>
-<% } %>
