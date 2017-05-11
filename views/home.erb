@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Account Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <% @records.each do |r| %>
+    <tr>
+      <td><%= r.created_at %></td>
+      <td><%= r.name %></td>
+      <td><%= r.usd %></td>
+    </tr>
+  <% end %>
+</table>
