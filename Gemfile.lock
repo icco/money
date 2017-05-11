@@ -67,6 +67,7 @@ GEM
       omniauth (~> 1.2)
     parser (2.4.0.0)
       ast (~> 2.2)
+    pg (0.20.0)
     powerpack (0.1.1)
     pusher-client (0.6.2)
       json
@@ -134,6 +135,7 @@ DEPENDENCIES
   erubis
   omniauth
   omniauth-coinbase
+  pg
   rack-protection
   rack-ssl-enforcer
   rack-test
