@@ -4,7 +4,6 @@ Bundler.require(:default, ENV["RACK_ENV"] || :development)
 
 require "rake/testtask"
 require "sinatra/activerecord/rake"
-require "textacular/tasks"
 
 namespace :db do
   task :load_config do

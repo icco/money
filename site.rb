@@ -4,8 +4,7 @@ RACK_ENV = (ENV["RACK_ENV"] || :development).to_sym
 Bundler.require(:default, RACK_ENV)
 
 require "logger"
-
-ActiveRecord::Base.extend(Textacular)
+require "./lib/record"
 
 class Money < Sinatra::Base
   register Sinatra::ActiveRecordExtension
@@ -51,7 +50,7 @@ class Money < Sinatra::Base
                                expire_after: 86_400, # 1 day
                                secret: ENV["SESSION_SECRET"]
     use OmniAuth::Builder do
-      provider :coinbase, ENV["COINBASE_CONSUMER_KEY"], ENV["COINBASE_CONSUMER_SECRET"]
+      provider :coinbase, ENV["COINBASE_CLIENT_ID"], ENV["COINBASE_CLIENT_SECRET"], scope: 'wallet:user:read,wallet:accounts:read'
     end
 
     # rubocop:disable
@@ -86,15 +85,39 @@ class Money < Sinatra::Base
 
   get "/" do
     if session[:username]
-      redirect "/home"
+      if session[:username] == ENV["VALID_USERID"]
+        redirect "/home"
+      else
+        error 403
+      end
     else
       erb :login
     end
   end
 
+  get "/home" do
+    if session[:username] != ENV["VALID_USERID"]
+      error 403
+    end
+
+    @records = Record.all
+    erb :home
+  end
+
+  get "/cron" do
+    client = Coinbase::Wallet::Client.new(api_key: ENV["COINBASE_API_KEY"], api_secret: ENV["COINBASE_API_SECRET"])
+    accounts = client.accounts
+    accounts.each do |a|
+      p a.id, a.name, a.native_balance
+      Record.create(native_id: a.id, name: a.name, usd: a.native_balance["amount"])
+    end
+
+    json({status: "ok"})
+  end
+
   get "/auth/:name/callback" do
     auth = request.env["omniauth.auth"]
-    session[:username] = auth.info.nickname
+    session[:username] = auth.info.id
 
     redirect "/"
   end
@@ -104,5 +127,13 @@ class Money < Sinatra::Base
     session = nil
 
     redirect "/"
+  end
+
+  def title
+    if @title
+      " | #{@title}"
+    else
+      ""
+    end
   end
 end

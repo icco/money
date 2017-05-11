@@ -14,7 +14,7 @@ gem "rake"
 gem "secure_headers"
 gem "sinatra", require: "sinatra/base"
 gem "sinatra-activerecord", require: "sinatra/activerecord"
-gem "textacular"
+gem "sinatra-contrib", require: "sinatra/json"
 gem "thin"
 gem "typhoeus"
 
